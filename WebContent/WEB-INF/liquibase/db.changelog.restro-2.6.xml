@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+	<changeSet author="Jayati" id="20161019-01">
+		<insert tableName="menu" schemaName="moyadev">
+			<column name="id" valueComputed="uuid_generate_v4()" />
+			<column name="menu_name" value="Manage Menu" />
+			<column name="parent_menu_id" value="" />
+			<column name="page_url" value="ManageMenu" />
+			<column name="menu_order" value="1a" />
+			<column name="help_content" value="" />
+			<column name="status" value="ACTIVE" />
+			<column name="last_updated" valueComputed="now()" />
+			<column name="last_updated_by" value="SYSTEM" />
+		</insert>
+	</changeSet>
+	<changeSet author="Pushpendra" id="20161019-02">
+		<insert tableName="role" schemaName="moyadev">
+			<column name="id" valueComputed="uuid_generate_v4()" />
+			<column name="name" value="SUPER ROLE" />
+			<column name="code" value="SUPER ROLE CODE" />
+			<column name="workflow_options" value="NONE" />
+			<column name="role_level" value="MINISTRY" />
+			<column name="last_updated" value="now()" />
+			<column name="last_updated_by" value="SYSTEM" />
+			<column name="status" value="ACTIVE" />
+		</insert>
+	</changeSet>
+
+	<changeSet author="Pushpendra" id="20161019-03">
+		<insert tableName="menu_per_role" schemaName="moyadev">
+			<column name="id" valueComputed="uuid_generate_v4()" />
+			<column name="menu_id" value="123456789012345678901234567890123456" />
+			<column name="role_id" value="123456789012345678901234567890123456" />
+			<column name="view_flag" value="true" />
+			<column name="edit_flag" value="true" />
+			<column name="last_updated" value="now()" />
+			<column name="last_updated_by" value="SYSTEM" />
+			<column name="delete_flag" value="true" />
+		</insert>
+		<sql>
+			UPDATE moyadev.menu_per_role
+			SET menu_id=(select id from
+			moyadev.menu where menu_name='Manage Menu'), role_id=(select id
+			from
+			moyadev.role where
+			name='SUPER ROLE')
+			WHERE
+			menu_id='123456789012345678901234567890123456' and
+			role_id='123456789012345678901234567890123456';
+		</sql>
+	</changeSet>
+	<changeSet author="Pushpendra" id="20161019-04">
+		<insert tableName="user" schemaName="moyadev">
+			<column name="id" valueComputed="uuid_generate_v4()" />
+			<column name="user_key" value="bharat.katkar@aurionpro.com" />
+			<column name="firstname" value="Himanshu" />
+			<column name="middlename" value="" />
+			<column name="lastname" value="Tiwari" />
+			<column name="designation" value="PE" />
+			<column name="gender" value="Male" />
+			<column name="district" value="NULL" />
+			<column name="state" value="NULL" />
+			<column name="dob" value="02/25/1989" />
+			<column name="usercode" value="582976" />
+			<column name="level" value="MINISTRY" />
+			<column name="fk_id" value="NULL" />
+			<column name="fk_type" value="MINISTRY" />
+			<column name="lock_expiration_time" value="" />
+			<column name="login_failure_count" value="0" />
+			<column name="password_expired" valueBoolean='0' />
+			<column name="require_password_change" valueBoolean='0' />
+			<column name="status" value="ACTIVE" />
+			<column name="expiration_date" value="" />
+			<column name="last_updated" valueComputed="now()" />
+			<column name="last_updated_by" value="SYSTEM" />
+			<column name="role_id" value="NULL" />
+			<column name="is_super_user" value="Yes" />
+		</insert>
+		<sql>
+			UPDATE moyadev.user
+			SET role_id=(select id
+			from
+			moyadev.role where
+			name='SUPER ROLE'), fk_id=(select id from moyadev.organization where
+			name='NCC')
+			WHERE user_key='bharat.katkar@aurionpro.com';
+		</sql>
+	</changeSet>
+
+	<changeSet author="Jayati" id="20161027-01">
+		<insert tableName="menu" schemaName="moyadev">
+			<column name="id" valueComputed="uuid_generate_v4()" />
+			<column name="menu_name" value="Role Management" />
+			<column name="parent_menu_id" value="" />
+			<column name="page_url" value="ManageRole" />
+			<column name="menu_order" value="1b" />
+			<column name="help_content" value="" />
+			<column name="status" value="ACTIVE" />
+			<column name="last_updated" valueComputed="now()" />
+			<column name="last_updated_by" value="SYSTEM" />
+		</insert>
+	</changeSet>
+	<changeSet author="Pushpendra" id="20161027-02">
+		<insert tableName="menu_per_role" schemaName="moyadev">
+			<column name="id" valueComputed="uuid_generate_v4()" />
+			<column name="menu_id" value="123456789012345678901234567890123457" />
+			<column name="role_id" value="123456789012345678901234567890123457" />
+			<column name="view_flag" value="true" />
+			<column name="edit_flag" value="true" />
+			<column name="last_updated" value="now()" />
+			<column name="last_updated_by" value="SYSTEM" />
+			<column name="delete_flag" value="true" />
+		</insert>
+		<sql>
+			UPDATE moyadev.menu_per_role
+			SET menu_id=(select id from
+			moyadev.menu where menu_name='Role Management'), role_id=(select id
+			from
+			moyadev.role where
+			name='SUPER ROLE')
+			WHERE
+			menu_id='123456789012345678901234567890123457' and
+			role_id='123456789012345678901234567890123457';
+		</sql>
+	</changeSet>
+</databaseChangeLog>

@@ -1,0 +1,132 @@
+<?xml  version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:lang="http://www.springframework.org/schema/lang"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd
+ 		http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+ 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+        http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+
+	<!-- <mvc:annotation-driven /> <mvc:default-servlet-handler /> -->
+	<!-- Activates various annotations to be detected in bean classes -->
+	<context:annotation-config />
+
+	<!-- Scans the classpath for annotated components that will be auto-registered 
+		as Spring beans. For example @Controller and @Service. Make sure to set the 
+		correct base-package -->
+	<context:component-scan base-package="com.moya.api" />
+	<bean id="schedulerFactoryBean"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean" />
+	<bean id="moyaEndpointImpl" class="com.moya.api.endpoint.impl.MoyaEndpointImpl" />
+	<bean id="schedulerEndpointImpl" class="com.moya.api.endpoint.impl.SchedulerEndpointImpl" />
+	<bean id="youthEnrollmentEndpointImpl" class="com.moya.api.endpoint.impl.YouthEnrollmentEndpointImpl" />
+	<bean id="userRegistrationEndpointImpl" class="com.moya.api.endpoint.impl.UserRegistrationEndpointImpl" />
+	<bean id="organizationEndpointImpl" class="com.moya.api.endpoint.impl.OrganizationEndpointImpl" />
+	<bean id="loginEndpointImpl" class="com.moya.api.endpoint.impl.LoginEndPointImpl" />
+	<bean id="roleEndpointImpl" class="com.moya.api.endpoint.impl.RoleEndpointImpl" />
+	<bean id="geographyEndpointImpl" class="com.moya.api.endpoint.impl.GeographyEndPointImpl" />
+	<bean id="exceptionEndpointImpl" class="com.moya.api.endpoint.impl.ExceptionEndpointImpl" />
+	<bean id="moyaFactory" class="com.moya.api.util.MoyaFactory" />
+	<bean id="contentEndpointImpl" class="com.moya.api.endpoint.impl.ContentEndpointImpl" />
+	<bean id="validateAccess" class="com.moya.api.util.ValidateMethodAccess" />
+	<bean id="menuEndpointImpl" class="com.moya.api.endpoint.impl.MenuEndPointImpl" />
+	<bean id="eventEndPointImpl" class="com.moya.api.endpoint.impl.EventEndPointImpl" />
+	<bean id="reportEndpointImpl" class="com.moya.api.endpoint.impl.ReportEndpointImpl" />
+	<bean id="menuPerRoleEndpointImpl" class="com.moya.api.endpoint.impl.MenuPerRoleEndPointImpl" />
+	<bean id="taskEndpointImpl" class="com.moya.api.endpoint.impl.TaskEndpointImpl" />
+	<bean id="achievementEndPointImpl" class="com.moya.api.endpoint.impl.AchievementEndPointImpl" />
+	<bean id="galleryEndpointImpl" class="com.moya.api.endpoint.impl.GalleryEndpointImpl" />
+	<bean id="faqEndpointImpl" class="com.moya.api.endpoint.impl.FAQEndPointImpl" />
+	<bean id="activityLogEndPointImpl" class="com.moya.api.endpoint.impl.ActivityLogEndPointImpl" />
+	<bean id="smsEmailReportEndPointImpl" class="com.moya.api.endpoint.impl.SMSEmailReportEndPointImpl" />
+	<bean id="activityEndPointImpl" class="com.moya.api.endpoint.impl.ActivityEndPointImpl" />
+	<bean id="homeLinksEndPointImpl" class="com.moya.api.endpoint.impl.HomeLinksEndPointImpl" />
+	<bean id="xssUtility" class="com.moya.api.util.XSSUtility" />
+	<bean id="contentSearchEndPointImpl" class="com.moya.api.endpoint.impl.ContentSearchEndPointImpl" />
+	
+	<jaxrs:server id="moyaService" address="/moyaService">
+		<jaxrs:providers>
+			<bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
+		</jaxrs:providers>
+		<jaxrs:serviceBeans>
+			<ref bean="moyaEndpointImpl" />
+			<ref bean="schedulerEndpointImpl" />
+			<ref bean="youthEnrollmentEndpointImpl" />
+			<ref bean="userRegistrationEndpointImpl" />
+			<ref bean="organizationEndpointImpl" />
+			<ref bean="loginEndpointImpl" />
+			<ref bean="roleEndpointImpl" />
+			<ref bean="geographyEndpointImpl" />
+			<ref bean="exceptionEndpointImpl" />
+			<ref bean="moyaFactory" />
+			<ref bean="contentEndpointImpl" />
+			<ref bean="validateAccess" />
+			<ref bean="menuEndpointImpl" />
+			<ref bean="eventEndPointImpl" />
+			<ref bean="reportEndpointImpl" />
+			<ref bean="menuPerRoleEndpointImpl" />
+			<ref bean="taskEndpointImpl" />
+			<ref bean="achievementEndPointImpl" />
+			<ref bean="galleryEndpointImpl" />
+			<ref bean="faqEndpointImpl" />
+			<ref bean="activityLogEndPointImpl"/>
+			<ref bean="smsEmailReportEndPointImpl"/>
+			<ref bean="activityEndPointImpl"/>
+			<ref bean="homeLinksEndPointImpl"/>
+			<ref bean="xssUtility"/>
+			<ref bean="contentSearchEndPointImpl"/> 
+			
+		</jaxrs:serviceBeans>
+		<jaxrs:extensionMappings>
+			<entry key="json" value="application/json" />
+		</jaxrs:extensionMappings>
+	</jaxrs:server>
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="classpath:messages" />
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
+
+	<bean id="messages"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="location" value="classpath:moya.properties" />
+	</bean>
+
+	<bean id="aesEncrytption" class="com.moya.api.util.AesEncrytption">
+		<constructor-arg type="java.lang.String">
+			<value>aXRzZGlnaXRhbDpp</value>
+		</constructor-arg>
+	</bean>
+
+	<!-- Exception Handling -->
+
+	<bean id="moyaErrorResponse" class="com.moya.api.exception.MoyaErrorResponse" />
+
+	<bean id="moyaResponseCreator" class="com.moya.api.exception.MoyaResponseCreator" />
+
+	<bean id="moyaGenericException" class="com.moya.api.exception.MoyaGenericException"
+		depends-on="moyaResponseCreator" scope="prototype" />
+
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl"
+		primary="true" autowire-candidate="true">
+
+	</bean>
+
+	<bean id="enrollmentNotificationJob" class="com.moya.api.jobs.EnrollmentNotificationJob" />
+
+	<bean id="multilingualUtility" class="com.moya.api.util.MultilingualUtility" />
+	
+	<bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor" />
+
+</beans>  

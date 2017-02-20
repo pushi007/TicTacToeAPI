@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+	<changeSet author="pushpendra" id="20160930-01">
+		<addColumn schemaName="moyadev" tableName="user">
+			<column name="is_super_user" type="varchar(50)" />
+		</addColumn>
+	</changeSet>
+	<changeSet author="Pushpendra" id="20160927-01">
+		<createView replaceIfExists="true" schemaName="moyadev"
+			viewName="v_user"> SELECT u.id,
+           u.user_key,
+           u.firstname,
+           u.lastname,
+           u.designation,
+           u.gender,
+           u.district,
+           u.state,
+           u.dob,
+           u.usercode,
+           u.level,
+           u.is_super_user,
+           u.role_id,
+           u.fk_id,
+           u.fk_type,
+           u.status,         
+           gs.geographic_name as state_name,
+           gd.geographic_name as district_name,
+           ua.attribute_value as email,        
+           uan.attribute_value as alternate_number,
+           uam.attribute_value as mobile_number
+      FROM moyadev.user u left join  moyadev.geographic_data gs on u.state = gs.ID left join moyadev.geographic_data gd on u.district=gd.ID left join moyadev.user_attribute ua on u.user_key=ua.user_key and ua.attribute_key='Email' left join moyadev.user_attribute uan on u.user_key=uan.user_key and uan.attribute_key='AlternateNumber' left join moyadev.user_attribute uam on u.user_key=uam.user_key and uam.attribute_key='MobileNumber'</createView>
+	</changeSet>
+<changeSet author="pallavi" id="20160930-02">
+		<modifyDataType columnName="email_body" newDataType="VARCHAR(1000)"
+			tableName="notification_email_details" schemaName="moyadev" />
+	</changeSet>
+	<changeSet author="pallavi" id="20160930-03">
+		<modifyDataType columnName="old_value" newDataType="VARCHAR(1000)"
+			tableName="audit_master" schemaName="moyadev" />
+		<modifyDataType columnName="new_value"
+			newDataType="VARCHAR(1000)" tableName="audit_master" schemaName="moyadev" />
+	</changeSet>
+	
+	
+</databaseChangeLog>

@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<!-- Register all entities classes here -->
+		<mapping class="com.moya.api.entity.YouthEnrollment" />
+		<mapping class="com.moya.api.entity.YouthEnrollmentAttribute" />
+		<mapping class="com.moya.api.entity.Notification" />
+		<mapping class="com.moya.api.entity.SmsNotification" />
+		<mapping class="com.moya.api.entity.User" />
+		<mapping class="com.moya.api.entity.UserAttribute" />
+		<mapping class="com.moya.api.entity.Role" />
+		<mapping class="com.moya.api.entity.UserRoles" />
+		<mapping class="com.moya.api.entity.Organization" />
+		<mapping class="com.moya.api.entity.OrganizationAttribute" />
+		<mapping class="com.moya.api.entity.AuditMaster" />
+		<mapping class="com.moya.api.entity.UserToken" />
+		<mapping class="com.moya.api.entity.LevelPriority" />
+		<mapping class="com.moya.api.entity.Geography" />
+		<mapping class="com.moya.api.entity.NotificationEmailDeatils" />
+		<mapping class="com.moya.api.entity.NotificationSmsDeatils" />
+		<mapping class="com.moya.api.entity.Menu" />
+		<mapping class="com.moya.api.entity.ExceptionEntity" />
+		<mapping class="com.moya.api.entity.YouthEnrollmentView" />
+		<mapping class="com.moya.api.entity.ContentManagement" />
+		<mapping class="com.moya.api.entity.UserViewEntity" />
+		<mapping class="com.moya.api.entity.YouthEnrollmentTemp" />
+		<mapping class="com.moya.api.entity.IncorrectDistrictName" />
+		<mapping class="com.moya.api.entity.IncorrectStateName" />
+		<mapping class="com.moya.api.entity.DuplicateRecords" />
+		<mapping class="com.moya.api.entity.DuplicateTempRecords" />
+		<mapping class="com.moya.api.entity.MenuPerRole" />
+		<mapping class="com.moya.api.entity.Task" />
+		<mapping class="com.moya.api.entity.VisitorsCount" />
+		<mapping class="com.moya.api.entity.Event" />
+		<mapping class="com.moya.api.entity.StateWiseUser" />
+		<mapping class="com.moya.api.entity.StateWiseYouth" />
+		<mapping class="com.moya.api.entity.DistrictWiseUser" />
+		<mapping class="com.moya.api.entity.DistrictWiseYouth" />
+		<mapping class="com.moya.api.entity.GeographyView" />
+		<mapping class="com.moya.api.entity.TaskViewEntity" />
+		<mapping class="com.moya.api.entity.TaskWorkflowEntity" />
+		<mapping class="com.moya.api.entity.Achievement" />
+		<mapping class="com.moya.api.entity.AchievementTaskViewEntity" />
+		<mapping class="com.moya.api.entity.AchievementTask" />
+		<mapping class="com.moya.api.entity.AchievementTaskWorkflowEntity" />
+		<mapping class="com.moya.api.entity.PhotoGalleryTaskViewEntity" />
+		<mapping class="com.moya.api.entity.PhotoGalleryTask" />
+		<mapping class="com.moya.api.entity.PhotoGalleryTaskWorkflowEntity" />
+		<mapping class="com.moya.api.entity.GalleryManagementEntity" />
+		<mapping class="com.moya.api.entity.GalleryItemEntity" />
+		<mapping class="com.moya.api.entity.FAQData" />
+		<mapping class="com.moya.api.entity.ActivityLogEntity" />
+		<mapping class="com.moya.api.entity.Activity" />
+		<mapping class="com.moya.api.entity.HomeLinks" />
+	</session-factory>
+</hibernate-configuration>

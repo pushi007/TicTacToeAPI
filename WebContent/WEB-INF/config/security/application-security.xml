@@ -1,0 +1,80 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
+http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.1.xsd">
+	<security:global-method-security
+		secured-annotations="enabled" />
+	<!-- Security configuration for REST services. -->
+	<security:http entry-point-ref="restServicesEntryPoint"
+		create-session="stateless" auto-config="true">
+		<security:custom-filter before="FORM_LOGIN_FILTER"
+			ref="customFilters" />
+		<security:access-denied-handler
+			ref="moyaAuthenticationAccessDeniedHandler" />
+
+		<!-- CSRF token configuration <security:csrf token-repository-ref="tokenRepository"/> -->
+		<security:csrf disabled="true" />
+
+		<!-- X-Frame-Options override default value -->
+		<!-- -->
+		<security:headers>
+			<security:frame-options disabled="true" />
+		</security:headers>
+
+	</security:http>
+
+
+	<bean id="tokenAuthenticationFilter" class="com.moya.api.security.TokenAuthenticationFilter">
+		<constructor-arg type="java.lang.String">
+			<value>/moya-api/rest/**</value>
+		</constructor-arg>
+		<property name="authenticationManager" ref="authenticationManager" />
+		<property name="authenticationSuccessHandler" ref="moyaAuthenticationSuccessHandler" />
+	</bean>
+
+	<bean id="restServicesEntryPoint" class="com.moya.api.security.MoyaAuthenticationEntryPoint" />
+
+	<bean id="moyaAuthenticationSuccessHandler" class="com.moya.api.security.MoyaAuthenticationSuccessHandler" />
+
+	<bean id="moyaAuthenticationService" class="com.moya.api.security.MoyaAuthenticationService" />
+
+	<bean id="moyaAuthenticationAccessDeniedHandler"
+		class="com.moya.api.security.MoyaAuthenticationAccessDeniedHandler" />
+
+	<bean id="bcryptEncoder"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+
+	<!-- CSRF repository <bean id="tokenRepository" class="org.springframework.security.web.csrf.CookieCsrfTokenRepository" 
+		> <property name="cookieHttpOnly" value="false"/> </bean> -->
+
+	<!-- XSS Filter addition with composite security filters. -->
+
+	<bean id="customFilters" class="org.springframework.web.filter.CompositeFilter">
+		<property name="filters">
+			<list>
+				<ref bean="tokenAuthenticationFilter" />
+				<ref bean="crossScriptingFilter" />
+				<ref bean="deviceResolverRequestFilter"/>
+			</list>
+		</property>
+	</bean>
+
+
+	<!-- Actual XSS filter to filter the scripts. -->
+	<bean id="crossScriptingFilter" class="com.moya.api.security.CrossScriptingFilter" />
+
+<!-- Device resolver filter -->
+
+  <bean id="deviceResolverRequestFilter" class="org.springframework.mobile.device.DeviceResolverRequestFilter"/>
+
+           
+	<security:authentication-manager alias="authenticationManager">
+		<security:authentication-provider
+			user-service-ref="moyaAuthenticationService">
+			<security:password-encoder ref="bcryptEncoder" />
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+</beans>

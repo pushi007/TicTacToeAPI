@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+	<changeSet author="pallavi" id="dropView">
+		<dropView schemaName="moyadev" viewName="youth_enrollment_view" />
+	</changeSet>	
+	<changeSet id="20161024-01" author="pallavi">
+		<modifyDataType columnName="approved_rejected_by" newDataType="varchar(50)"
+			tableName="youth_enrollment" schemaName="moyadev" />
+		 <modifyDataType columnName="approved_rejected_datetime" newDataType="TIMESTAMP WITHOUT TIME ZONE"
+			tableName="youth_enrollment" schemaName="moyadev" />
+	</changeSet>
+	
+		<changeSet author="Pallavi" id="20161017-06">
+		<createView replaceIfExists="true" schemaName="moyadev"
+			viewName="youth_enrollment_view">  
+			SELECT youth.id,
+           youth.aadhar_number,
+           youth.fullname,
+           youth.fathermothername,
+           youth.sex,
+           youth.dob,
+           youth.address,
+           youth.bloodgroup,
+           youth.pincode,
+           youth.fk_type,
+           youth.fk_id,
+           youth.landmark,   
+           youth.state,
+           youth.district,
+           youth.email,
+           youth.mobile,
+           youth.city_village,
+           youth.status, 
+           youth.block, 
+           youth.approve_reject_status,
+           youth.approved_rejected_datetime,
+           youth.last_updated_by,
+           youth.approved_rejected_by,
+           youth.remark,
+           gs.geographic_name as state_name,
+           gd.geographic_name as district_name        
+      FROM moyadev.youth_enrollment youth left join  moyadev.geographic_data gs on youth.state = gs.ID left join moyadev.geographic_data gd on youth.district=gd.ID
+      </createView>
+	</changeSet>
+	
+	
+</databaseChangeLog>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+	<changeSet author="Jayati" id="20161025-02">
+		<createView replaceIfExists="true" schemaName="moyadev"
+			viewName="geography_view">
+			select g.* , ge.geographic_name as parent_name from moyadev.geographic_data g left join  moyadev.geographic_data ge on ge.id = g.parent_geographic_id
+      </createView>
+	</changeSet>
+</databaseChangeLog>

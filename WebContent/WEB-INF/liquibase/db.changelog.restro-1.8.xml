@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+	<changeSet author="Pushpendra" id="20161013-01">
+		<createTable tableName="task" schemaName="moyadev">
+			<column name="id" type="CHAR(36)">
+				<constraints nullable="false" />
+			</column>
+			<column name="task_for_level" type="VARCHAR(100)" />
+			<column name="task_for_organization" type="CHAR(36)" />
+			<column name="task_for_user" type="VARCHAR(100)" />
+			<column name="task_of_event" type="CHAR(36)" />
+			<column name="task_for_district" type="CHAR(36)" />
+			<column name="task_for_state" type="CHAR(36)" />
+			<column name="remarks" type="VARCHAR(500)" />
+			<column name="task_edited_by" type="VARCHAR(100)" />
+			<column name="task_edited_date" type="timestamp" />
+			<column name="task_status" type="VARCHAR(100)" />
+		</createTable>
+		<addPrimaryKey columnNames="id" tableName="task"
+			schemaName="moyadev" />
+		<addNotNullConstraint columnName="task_for_level"
+			columnDataType="VARCHAR(100)" tableName="task" schemaName="moyadev" />
+		<addNotNullConstraint columnName="task_for_organization"
+			columnDataType="CHAR(36)" tableName="task" schemaName="moyadev" />
+		<createIndex indexName="fk_task" tableName="task"
+			schemaName="moyadev">
+			<column name="task_for_level" type="VARCHAR(100)" />
+		</createIndex>
+	</changeSet>
+	<changeSet author="Pushpendra" id="20161013-02">
+		<createTable tableName="workflow_task_mapping" schemaName="moyadev">
+			<column name="id" type="CHAR(36)">
+				<constraints nullable="false" />
+			</column>
+			<column name="workflow_for_level" type="VARCHAR(100)" />
+			<column name="workflow_for_status" type="VARCHAR(100)" />
+			<column name="task_new_level" type="VARCHAR(100)" />
+		</createTable>
+		<addPrimaryKey columnNames="id" tableName="workflow_task_mapping"
+			schemaName="moyadev" />
+		<addNotNullConstraint columnName="workflow_for_level"
+			columnDataType="CHAR(36)" tableName="workflow_task_mapping"
+			schemaName="moyadev" />
+		<addNotNullConstraint columnName="workflow_for_status"
+			columnDataType="VARCHAR(100)" tableName="workflow_task_mapping"
+			schemaName="moyadev" />
+	</changeSet>
+
+
+	<changeSet author="workflow_task_mapping" id="20161013-03">
+		<insert tableName="workflow_task_mapping" schemaName="moyadev">
+			<column name="id" valueComputed="uuid_generate_v4()" />
+			<column name="workflow_for_level" value="DISTRICT" />
+			<column name="workflow_for_status" value="APPROVED" />
+			<column name="task_new_level" value="STATE" />
+		</insert>
+		<insert tableName="workflow_task_mapping" schemaName="moyadev">
+			<column name="id" valueComputed="uuid_generate_v4()" />
+			<column name="workflow_for_level" value="STATE" />
+			<column name="workflow_for_status" value="APPROVED" />
+			<column name="task_new_level" value="NATIONAL" />
+		</insert>
+		<insert tableName="workflow_task_mapping" schemaName="moyadev">
+			<column name="id" valueComputed="uuid_generate_v4()" />
+			<column name="workflow_for_level" value="NATIONAL" />
+			<column name="workflow_for_status" value="APPROVED" />
+			<column name="task_new_level" value="COMPLETED" />
+		</insert>
+		<insert tableName="workflow_task_mapping" schemaName="moyadev">
+			<column name="id" valueComputed="uuid_generate_v4()" />
+			<column name="workflow_for_level" value="DISTRICT" />
+			<column name="workflow_for_status" value="REJECTED" />
+			<column name="task_new_level" value="UNIT" />
+		</insert>
+		<insert tableName="workflow_task_mapping" schemaName="moyadev">
+			<column name="id" valueComputed="uuid_generate_v4()" />
+			<column name="workflow_for_level" value="STATE" />
+			<column name="workflow_for_status" value="REJECTED" />
+			<column name="task_new_level" value="UNIT" />
+		</insert>
+		<insert tableName="workflow_task_mapping" schemaName="moyadev">
+			<column name="id" valueComputed="uuid_generate_v4()" />
+			<column name="workflow_for_level" value="NATIONAL" />
+			<column name="workflow_for_status" value="REJECTED" />
+			<column name="task_new_level" value="UNIT" />
+		</insert>
+	</changeSet>
+
+	<changeSet author="Pushpendra" id="20161013-04">
+		<createView replaceIfExists="true" schemaName="moyadev"
+			viewName="v_task"> SELECT t.id,
+           t.task_for_organization,
+           t.task_for_user,
+           t.task_of_event,
+           t.task_for_district,
+           t.task_for_state,
+           t.task_status,
+           wt.task_new_level          
+      FROM moyadev.task t left join  moyadev.workflow_task_mapping wt on t.task_for_level = wt.workflow_for_level and t.task_status=wt.workflow_for_status</createView>
+	</changeSet>
+</databaseChangeLog>

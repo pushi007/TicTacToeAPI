@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+
+	<changeSet author="Vikas" id="20161015-01">
+		<createView replaceIfExists="true" schemaName="moyadev"
+			viewName="state_wise_user_view">
+			SELECT  geo.geographic_name, count(usr.id),geo.id
+            FROM  moyadev.geographic_data geo
+            INNER JOIN  moyadev.USER usr
+            ON usr.state=geo.id
+            GROUP BY  geo.id
+      </createView>
+	</changeSet>
+
+	<changeSet author="Vikas" id="20161015-02">
+		<createView replaceIfExists="true" schemaName="moyadev"
+			viewName="district_wise_user_view">
+			SELECT  geo.geographic_name, count(usr.id),geo.id
+            FROM  moyadev.geographic_data geo
+            INNER JOIN  moyadev.USER usr
+            ON usr.district=geo.id
+            GROUP BY  geo.id
+      </createView>
+	</changeSet>
+
+	<changeSet author="Vikas" id="20161015-03">
+		<createView replaceIfExists="true" schemaName="moyadev"
+			viewName="state_wise_youth_view">
+			SELECT  geo.geographic_name, count(youth.id),geo.id
+            FROM  moyadev.geographic_data geo
+            INNER JOIN  moyadev.youth_enrollment youth
+            ON youth.state=geo.id
+            GROUP BY  geo.id
+      </createView>
+	</changeSet>
+	<changeSet author="Vikas" id="20161015-04">
+		<createView replaceIfExists="true" schemaName="moyadev"
+			viewName="district_wise_youth_view">
+			SELECT  geo.geographic_name, count(youth.id),geo.id
+            FROM  moyadev.geographic_data geo
+            INNER JOIN  moyadev.youth_enrollment youth
+            ON youth.district=geo.id
+            GROUP BY  geo.id
+      </createView>
+	</changeSet>
+	
+</databaseChangeLog>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+ 	 
+
+	<!-- Alter youth_enrollment_temp table -->
+<changeSet author="Jayati" id="20161211-01">
+			<modifyDataType columnName="publish_date"
+			newDataType="date" tableName="gallery_album" schemaName="moyadev" />
+	</changeSet> 
+	 	
+	 
+
+</databaseChangeLog>

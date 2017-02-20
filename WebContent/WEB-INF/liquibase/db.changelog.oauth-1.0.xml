@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+	<changeSet author="Himanshu" id="20160725-01">
+		<createTable tableName="oauth_client_details" >
+			<column name="client_id" type="VARCHAR(256)">
+				<constraints nullable="false" />
+			</column>
+			<column name="resource_ids" type="VARCHAR(100)" />
+			<column name="client_secret" type="VARCHAR(100)" />
+			<column name="scope" type="VARCHAR(100)" />
+			<column name="authorized_grant_types" type="VARCHAR(100)" />
+			<column name="web_server_redirect_uri" type="VARCHAR(256)" />
+			<column name="authorities" type="VARCHAR(100)" />
+			<column name="access_token_validity" type="INT" />
+			<column name="refresh_token_validity" type="INT" />
+			<column name="additional_information" type="VARCHAR(4096)" />
+			<column name="autoapprove" type="VARCHAR(4096)" />
+
+		</createTable>
+		<addPrimaryKey columnNames="client_id" tableName="oauth_client_details"  />
+		<addUniqueConstraint columnNames="client_id" tableName="oauth_client_details"  />
+		<addNotNullConstraint columnName="client_id" columnDataType="varchar(256)" tableName="oauth_client_details"  />
+	</changeSet>
+	<changeSet author="Himanshu" id="20160830-02">
+		<insert tableName="oauth_client_details" >
+			<column name="client_id" value="moya-api" />
+			<column name="resource_ids" value="rest_api" />
+			<column name="client_secret" value="$2a$11$gxpnezmYfNJRYnw/EpIK5Oe08TlwZDmcmUeKkrGcSGGHXvWaxUwQ2" />
+			<column name="scope" value="trust,read,write" />
+			<column name="authorized_grant_types" value="client_credentials,authorization_code,implicit,password,refresh_token" />
+			<column name="authorities" value="ROLE_USER" />
+			<column name="access_token_validity" value="4500" />
+			<column name="refresh_token_validity" value="4500" />
+		</insert>
+	</changeSet>
+	<changeSet author="Himanshu" id="20160725-16">
+		<createTable tableName="oauth_access_token" >
+			<column name="token_id" type="varchar(256)">
+				<constraints nullable="false" />
+			</column>
+			<column name="token" type="blob" />
+			<column name="authentication_id" type="VARCHAR(256)" />
+			<column name="user_name" type="VARCHAR(256)" />
+			<column name="client_id" type="VARCHAR(256)" />
+			<column name="authentication" type="blob" />
+			<column name="refresh_token" type="VARCHAR(256)" />
+		</createTable>
+		<!-- <addPrimaryKey columnNames="token_id" tableName="oauth_access_token" /> -->
+	</changeSet>
+	<changeSet author="Himanshu" id="20160725-02">
+		<createTable tableName="oauth_refresh_token" >
+			<column name="token_id" type="VARCHAR(256)">
+				<constraints nullable="false" />
+			</column>
+			<column name="token" type="blob" />
+			<column name="authentication" type="blob" />
+
+		</createTable>
+		<!-- <addPrimaryKey columnNames="token_id" tableName="oauth_refresh_token"  /> -->
+	</changeSet>
+</databaseChangeLog>

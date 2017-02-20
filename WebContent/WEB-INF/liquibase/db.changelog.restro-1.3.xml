@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+	<changeSet author="pushpendra" id="20160926-01">
+		<addColumn schemaName="moyadev" tableName="user">
+			<column name="role_id" type="varchar(100)" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="Dinesh" id="20160927-04">
+		<createTable tableName="menu" schemaName="moyadev">
+			<column name="id" type="CHAR(36)">
+				<constraints nullable="false" />
+			</column>
+			<column name="menu_name" type="CHAR(36)" />
+			<column name="parent_menu_id" type="CHAR(36)" />
+			<column name="page_url" type="varchar(100)" />
+			<column name="menu_order" type="VARCHAR(100)" />
+			<column name="help_content" type="VARCHAR(100)" />
+			<column name="last_updated" type="timestamp" />
+			<column name="last_updated_by" type="VARCHAR(100)" />
+		</createTable>
+		<addPrimaryKey columnNames="id" tableName="menu"
+			schemaName="moyadev" />
+	</changeSet>
+	<changeSet author="Pallavi" id="20160927-06">
+		<renameColumn newColumnName="fathermothername"
+			oldColumnName="fathername" schemaName="moyadev" tableName="youth_enrollment" />
+		<renameColumn newColumnName="block" oldColumnName="taluka"
+			schemaName="moyadev" tableName="youth_enrollment" />
+	</changeSet>
+	<changeSet author="Pallavi" id="20160927-07">
+		<dropColumn schemaName="moyadev" tableName="youth_enrollment">
+			<!-- <column name="taluka" type="VARCHAR(100)" /> -->
+			<column name="mothername" type="VARCHAR(100)" />
+		</dropColumn>
+	</changeSet>
+	<changeSet author="liquibase-docs" id="dropUniqueConstraint-example">
+		<dropUniqueConstraint constraintName="youthEnrollmentUniqueConstaint"
+			schemaName="moyadev" tableName="youth_enrollment" />
+	</changeSet>
+	<changeSet author="Pallavi" id="20160922-01">
+		<addUniqueConstraint catalogName="cat"
+			columnNames="fullname, fathermothername, dob" constraintName="youthEnrollmentUniqueConstaint"
+			schemaName="moyadev" tableName="youth_enrollment" />
+	</changeSet>
+</databaseChangeLog>

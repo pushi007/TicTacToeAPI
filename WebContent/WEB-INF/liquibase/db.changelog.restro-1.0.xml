@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+	<changeSet author="Himanshu" id="20160903-01">
+		<createTable tableName="user" schemaName="moyadev">
+			<column name="id" type="CHAR(36)">
+				<constraints nullable="false" />
+			</column>
+			<column name="user_key" type="VARCHAR(100)" />
+			<column name="firstname" type="VARCHAR(100)" />
+			<column name="middlename" type="VARCHAR(100)" />
+			<column name="lastname" type="VARCHAR(100)" />
+			<column name="designation" type="VARCHAR(100)" />
+			<column name="gender" type="VARCHAR(100)" />
+			<column name="district" type="VARCHAR(100)" />
+			<column name="state" type="VARCHAR(100)" />
+			<column name="dob" type="VARCHAR(100)" />
+			<column name="usercode" type="VARCHAR(100)" />
+			<column name="level" type="VARCHAR(100)" />
+			<column name="fk_id" type="CHAR(36)" />
+			<column name="fk_type" type="VARCHAR(100)" />
+			<column name="lock_expiration_time" type="VARCHAR(100)" />
+			<column name="login_failure_count" type="INT" />
+			<column name="password_expired" type="boolean" />
+			<column name="require_password_change" type="boolean" />
+			<column name="status" type="VARCHAR(100)" />
+			<column name="expiration_date" type="VARCHAR(100)" />
+			<column name="last_updated" type="timestamp" />
+			<column name="last_updated_by" type="VARCHAR(100)" />
+		</createTable>
+		<addPrimaryKey columnNames="user_key" tableName="user"
+			schemaName="moyadev" />
+		<addUniqueConstraint columnNames="id" tableName="user"
+			schemaName="moyadev" />
+		<addNotNullConstraint columnName="id"
+			columnDataType="CHAR(36)" tableName="user" schemaName="moyadev" />
+		<addNotNullConstraint columnName="user_key"
+			columnDataType="VARCHAR(100)" tableName="user" schemaName="moyadev" />
+		<createIndex indexName="fk_user" tableName="user"
+			schemaName="moyadev">
+			<column name="user_key" type="VARCHAR(100)" />
+		</createIndex>
+	</changeSet>
+	<changeSet author="Himanshu" id="20160725-16">
+		<createTable tableName="user_attribute" schemaName="moyadev">
+			<column name="id" type="CHAR(36)">
+				<constraints nullable="false" />
+			</column>
+			<column name="user_id" type="CHAR(36)" />
+			<column name="user_key" type="VARCHAR(100)" />
+			<column name="attribute_key" type="VARCHAR(100)" />
+			<column name="attribute_value" type="VARCHAR(100)" />
+			<column name="last_updated" type="timestamp" />
+			<column name="last_updated_by" type="VARCHAR(100)" />
+		</createTable>
+		<addPrimaryKey columnNames="id" tableName="user_attribute"
+			schemaName="moyadev" />
+		<createIndex indexName="fk_user_attribute" tableName="user_attribute"
+			schemaName="moyadev">
+			<column name="user_key" type="VARCHAR(100)" />
+		</createIndex>
+	</changeSet>
+	<changeSet author="Himanshu" id="20160725-02">
+		<createTable tableName="role" schemaName="moyadev">
+			<column name="id" type="CHAR(36)">
+				<constraints nullable="false" />
+			</column>
+			<column name="app_name" type="VARCHAR(20)" />
+			<column name="name" type="VARCHAR(100)" />
+			<column name="role_type" type="VARCHAR(100)" />
+			<column name="role_level" type="VARCHAR(100)" />
+			<column name="last_updated" type="timestamp" />
+			<column name="last_updated_by" type="VARCHAR(100)" />
+		</createTable>
+		<addPrimaryKey columnNames="id" tableName="role"
+			schemaName="moyadev" />
+	</changeSet>
+	<changeSet author="Himanshu" id="20160726-01">
+		<createTable tableName="user_roles" schemaName="moyadev">
+			<column name="id" type="CHAR(36)">
+				<constraints nullable="false" />
+			</column>
+			<column name="user_key" type="VARCHAR(100)" />
+			<column name="user_id" type="CHAR(36)" />
+			<column name="role_id" type="CHAR(36)" />
+			<column name="role_level" type="VARCHAR(100)" />
+			<column name="last_updated" type="timestamp" />
+			<column name="last_updated_by" type="VARCHAR(100)" />
+		</createTable>
+		<addPrimaryKey columnNames="id" tableName="user_roles"
+			schemaName="moyadev" />
+		<addNotNullConstraint columnName="user_key"
+			columnDataType="VARCHAR(100)" tableName="user_roles" schemaName="moyadev" />
+		<createIndex indexName="fk_user_roles" tableName="user_roles"
+			schemaName="moyadev">
+			<column name="user_key" type="VARCHAR(100)" />
+		</createIndex>
+	</changeSet>
+	<changeSet author="Himanshu" id="20160725-04">
+		<createTable tableName="organization" schemaName="moyadev">
+			<column name="id" type="CHAR(36)">
+				<constraints nullable="false" />
+			</column>
+			<column name="organization_type" type="VARCHAR(100)" />
+			<column name="name" type="VARCHAR(100)" />
+			<column name="organization_alias" type="VARCHAR(100)" />
+			<column name="organization_email" type="VARCHAR(100)" />
+			<column name="organization_registration_number" type="VARCHAR(100)" />
+			<column name="organization_url" type="VARCHAR(100)" />
+			<column name="description" type="VARCHAR(100)" />
+			<column name="support_email" type="VARCHAR(100)" />
+			<column name="support_phone_area_code" type="INT" />
+			<column name="support_phone_isd_code" type="INT" />
+			<column name="support_phone" type="VARCHAR(20)" />
+			<column name="support_phone_type" type="VARCHAR(20)" />
+			<column name="organization_status" type="VARCHAR(100)" />
+			<column name="address" type="VARCHAR(100)" />
+			<column name="last_updated" type="timestamp" />
+			<column name="last_updated_by" type="VARCHAR(100)" />
+		</createTable>
+		<addPrimaryKey columnNames="id" tableName="organization"
+			schemaName="moyadev" />
+	</changeSet>
+	<changeSet author="Himanshu" id="20160725-09">
+		<createTable tableName="organization_attribute"
+			schemaName="moyadev">
+			<column name="id" type="CHAR(36)">
+				<constraints nullable="false" />
+			</column>
+			<column name="fk_id" type="CHAR(36)" />
+			<column name="fk_type" type="VARCHAR(100)" />
+			<column name="capacity" type="VARCHAR(100)" />
+			<column name="open_time" type="VARCHAR(100)" />
+			<column name="close_time" type="VARCHAR(100)" />
+			<column name="last_updated" type="timestamp" />
+			<column name="last_updated_by" type="VARCHAR(100)" />
+		</createTable>
+		<addPrimaryKey columnNames="id" tableName="organization_attribute"
+			schemaName="moyadev" />
+	</changeSet>
+	<changeSet author="Himanshu" id="20160726-02">
+		<insert tableName="role" schemaName="moyadev">
+			<column name="id" valueComputed="uuid_generate_v4()" />
+			<column name="app_name" value="restro_app" />
+			<column name="name" value="SUPER ADMIN" />
+			<column name="role_type" value="SUPERADMIN" />
+			<column name="role_level" value="ADMIN" />
+			<column name="last_updated" value="now()" />
+			<column name="last_updated_by" value="SYSTEM" />
+		</insert>
+		<insert tableName="role" schemaName="moyadev">
+			<column name="id" valueComputed="uuid_generate_v4()" />
+			<column name="app_name" value="restro_app" />
+			<column name="name" value="ADMIN" />
+			<column name="role_type" value="ADMIN" />
+			<column name="role_level" value="ADMIN" />
+			<column name="last_updated" value="now()" />
+			<column name="last_updated_by" value="SYSTEM" />
+		</insert>
+		<insert tableName="role" schemaName="moyadev">
+			<column name="id" valueComputed="uuid_generate_v4()" />
+			<column name="app_name" value="restro_app" />
+			<column name="name" value="NATIONAL REVIEWER" />
+			<column name="role_type" value="NATIONALREVIEWER" />
+			<column name="role_level" value="NATIONAL" />
+			<column name="last_updated" value="now()" />
+			<column name="last_updated_by" value="SYSTEM" />
+		</insert>
+		<insert tableName="role" schemaName="moyadev">
+			<column name="id" valueComputed="uuid_generate_v4()" />
+			<column name="app_name" value="restro_app" />
+			<column name="name" value="NATIONAL APPROVER" />
+			<column name="role_type" value="NATIONALAPPROVER" />
+			<column name="role_level" value="NATIONAL" />
+			<column name="last_updated" value="now()" />
+			<column name="last_updated_by" value="SYSTEM" />
+		</insert>
+		<insert tableName="role" schemaName="moyadev">
+			<column name="id" valueComputed="uuid_generate_v4()" />
+			<column name="app_name" value="restro_app" />
+			<column name="name" value="STATE REVIEWER" />
+			<column name="role_type" value="STATEREVIEWER" />
+			<column name="role_level" value="STATE" />
+			<column name="last_updated" value="now()" />
+			<column name="last_updated_by" value="SYSTEM" />
+		</insert>
+		<insert tableName="role" schemaName="moyadev">
+			<column name="id" valueComputed="uuid_generate_v4()" />
+			<column name="app_name" value="restro_app" />
+			<column name="name" value="STATE APPROVER" />
+			<column name="role_type" value="STATEAPPROVER" />
+			<column name="role_level" value="STATE" />
+			<column name="last_updated" value="now()" />
+			<column name="last_updated_by" value="SYSTEM" />
+		</insert>
+		<insert tableName="role" schemaName="moyadev">
+			<column name="id" valueComputed="uuid_generate_v4()" />
+			<column name="app_name" value="restro_app" />
+			<column name="name" value="DISTRICT REVIEWER" />
+			<column name="role_type" value="DISTRICTREVIEWER" />
+			<column name="role_level" value="DISTRICT" />
+			<column name="last_updated" value="now()" />
+			<column name="last_updated_by" value="SYSTEM" />
+		</insert>
+		<insert tableName="role" schemaName="moyadev">
+			<column name="id" valueComputed="uuid_generate_v4()" />
+			<column name="app_name" value="restro_app" />
+			<column name="name" value="DISTRICT APPROVER" />
+			<column name="role_type" value="DISTRICTAPPROVER" />
+			<column name="role_level" value="DISTRICT" />
+			<column name="last_updated" value="now()" />
+			<column name="last_updated_by" value="SYSTEM" />
+		</insert>
+	</changeSet>
+	<changeSet author="Himanshu" id="20160830-01">
+		<createTable tableName="audit_master" schemaName="moyadev">
+			<column name="id" type="CHAR(36)">
+				<constraints nullable="false" />
+			</column>
+			<column name="entity_id" type="VARCHAR(100)" />
+			<column name="entity" type="VARCHAR(100)" />
+			<column name="operation" type="VARCHAR(100)" />
+			<column name="coloumn_name" type="VARCHAR(100)" />
+			<column name="old_value" type="VARCHAR(100)" />
+			<column name="new_value" type="VARCHAR(100)" />
+			<column name="last_updated" type="timestamp" />
+			<column name="last_updated_by" type="VARCHAR(100)" />
+		</createTable>
+		<addPrimaryKey columnNames="id" tableName="audit_master"
+			schemaName="moyadev" />
+	</changeSet>
+	<changeSet author="Himanshu" id="20160831-01">
+		<createTable tableName="youth_enrollment" schemaName="moyadev">
+			<column name="id" type="CHAR(36)">
+				<constraints nullable="false" />
+			</column>
+			<column name="aadhar_number" type="VARCHAR(100)" />
+			<column name="fullname" type="VARCHAR(100)" />
+			<column name="fathername" type="VARCHAR(100)" />
+			<column name="mothername" type="VARCHAR(100)" />
+			<column name="sex" type="VARCHAR(100)" />
+			<column name="dob" type="VARCHAR(100)" />
+			<column name="address" type="VARCHAR(100)" />
+			<column name="landmark" type="VARCHAR(100)" />
+			<column name="state" type="VARCHAR(100)" />
+			<column name="district" type="VARCHAR(100)" />
+			<column name="taluka" type="VARCHAR(100)" />
+			<column name="email" type="VARCHAR(100)" />
+			<column name="mobile" type="VARCHAR(100)" />
+			<column name="bloodgroup" type="VARCHAR(100)" />			
+			<column name="city_village" type="VARCHAR(100)" />
+			<column name="pincode" type="VARCHAR(100)" />
+			<column name="fk_id" type="CHAR(36)" />
+			<column name="fk_type" type="VARCHAR(100)" />
+			<column name="status" type="VARCHAR(100)" />
+			<column name="last_updated" type="timestamp" />
+			<column name="last_updated_by" type="VARCHAR(100)" />
+		</createTable>
+		<addPrimaryKey columnNames="id" tableName="youth_enrollment"
+			schemaName="moyadev" />
+		<createIndex indexName="fk_youth_enrollment" tableName="youth_enrollment"
+			schemaName="moyadev">
+			<column name="id" type="VARCHAR(100)" />
+		</createIndex>
+	</changeSet>
+	<changeSet author="Himanshu" id="20160831-02">
+		<createTable tableName="youth_enrollment_attribute"
+			schemaName="moyadev">
+			<column name="id" type="CHAR(36)">
+				<constraints nullable="false" />
+			</column>
+			<column name="youth_enrollment_id" type="CHAR(36)" />
+			<column name="attribute_key" type="VARCHAR(100)" />
+			<column name="attribute_value" type="VARCHAR(100)" />
+			<column name="last_updated" type="timestamp" />
+			<column name="last_updated_by" type="VARCHAR(100)" />
+		</createTable>
+		<addPrimaryKey columnNames="id" tableName="youth_enrollment_attribute"
+			schemaName="moyadev" />
+		<createIndex indexName="fk_youth_enrollment_attribute"
+			tableName="youth_enrollment_attribute" schemaName="moyadev">
+			<column name="youth_enrollment_id" type="VARCHAR(100)" />
+		</createIndex>
+	</changeSet>
+	<changeSet author="Himanshu" id="20160902-01">
+		<createTable tableName="organization_notification_config"
+			schemaName="moyadev">
+			<column name="id" type="CHAR(36)">
+				<constraints nullable="false" />
+			</column>
+			<column name="fk_id" type="CHAR(36)" />
+			<column name="fk_type" type="VARCHAR(100)" />
+			<column name="notification_key" type="VARCHAR(100)" />
+			<column name="protocol" type="VARCHAR(100)" />
+			<column name="host" type="VARCHAR(100)" />
+			<column name="username" type="VARCHAR(100)" />
+			<column name="password" type="VARCHAR(100)" />
+			<column name="auth_flag" type="VARCHAR(100)" />
+			<column name="socket_port" type="VARCHAR(100)" />
+			<column name="last_updated" type="timestamp" />
+			<column name="last_updated_by" type="VARCHAR(100)" />
+		</createTable>
+		<addPrimaryKey columnNames="id"
+			tableName="organization_notification_config" schemaName="moyadev" />
+	</changeSet>
+	<changeSet author="Himanshu" id="20160726-04">
+		<addForeignKeyConstraint baseColumnNames="user_key"
+			onUpdate="CASCADE" onDelete="CASCADE" baseTableName="user_roles"
+			baseTableSchemaName="moyadev" constraintName="fk_user"
+			referencedColumnNames="user_key" referencedTableName="user"
+			referencedTableSchemaName="moyadev" />
+		<addForeignKeyConstraint baseColumnNames="user_key"
+			onUpdate="CASCADE" onDelete="CASCADE" baseTableName="user_attribute"
+			baseTableSchemaName="moyadev" constraintName="fk_user_attribute"
+			referencedColumnNames="user_key" referencedTableName="user"
+			referencedTableSchemaName="moyadev" />
+		<!--<addForeignKeyConstraint baseColumnNames="youth_enrollment_id"
+			onUpdate="CASCADE" onDelete="CASCADE" baseTableName="youth_enrollment_attribute"
+			baseTableSchemaName="moyadev" constraintName="fk_youth_enrollment"
+			referencedColumnNames="id" referencedTableName="youth_enrollment"
+			referencedTableSchemaName="moyadev" />-->
+	</changeSet>
+	<!-- <changeSet author="Pushpendra" id="20160903-01"> <createTable tableName="user_registration" 
+		schemaName="moyadev"> <column name="id" type="CHAR(36)"> <constraints nullable="false" 
+		/> </column> <column name="username" type="VARCHAR(100)" /> <column name="firstname" 
+		type="VARCHAR(100)" /> <column name="lastname" type="VARCHAR(100)" /> <column 
+		name="gender" type="VARCHAR(20)" /> <column name="organisation_name" type="VARCHAR(100)" 
+		/> <column name="organisation_code" type="VARCHAR(100)" /> <column name="organisation_designation" 
+		type="VARCHAR(100)" /> <column name="emailid" type="VARCHAR(100)" /> <column 
+		name="dob" type="VARCHAR(100)" /> <column name="issuperuser" type="boolean" 
+		/> <column name="mobile_number" type="VARCHAR(15)" /> <column name="alternate_number" 
+		type="VARCHAR(15)" /> <column name="organisation_role_name" type="VARCHAR(100)" 
+		/> <column name="organisation_level_options" type="VARCHAR(100)" /> <column 
+		name="statename" type="VARCHAR(100)" /> <column name="district" type="VARCHAR(100)" 
+		/> </createTable> <addPrimaryKey columnNames="id" tableName="user_registration" 
+		schemaName="moyadev" /> <addUniqueConstraint columnNames="username" tableName="user_registration" 
+		schemaName="moyadev" /> <addNotNullConstraint columnName="id" columnDataType="CHAR(36)" 
+		tableName="user_registration" schemaName="moyadev" /> <addNotNullConstraint 
+		columnName="username" columnDataType="VARCHAR(100)" tableName="user_registration" 
+		schemaName="moyadev" /> <createIndex indexName="fk_username" tableName="user_registration" 
+		schemaName="moyadev"> <column name="username" type="VARCHAR(100)" /> </createIndex> 
+		</changeSet> -->
+
+	<changeSet author="Himanshu" id="20160904-01">
+		<insert tableName="user" schemaName="moyadev">
+			<column name="id" valueComputed="uuid_generate_v4()" />
+			<column name="user_key" value="su@su.su" />
+			<column name="firstname" value="Himanshu" />
+			<column name="middlename" value="" />
+			<column name="lastname" value="Tiwati" />
+			<column name="designation" value="PE" />
+			<column name="gender" value="M" />
+			<column name="district" value="Pune" />
+			<column name="state" value="MH" />
+			<column name="dob" value="02/25/1989" />
+			<column name="usercode" value="582976" />
+			<column name="level" value="ADMIN" />
+			<column name="fk_id" value="NULL" />
+			<column name="fk_type" value="MINISTRY" />
+			<column name="lock_expiration_time" value="" />
+			<column name="login_failure_count" value="0" />
+			<column name="password_expired" valueBoolean='0' />
+			<column name="require_password_change" valueBoolean='0' />
+			<column name="status" value="ACTIVE" />
+			<column name="expiration_date" value="" />
+			<column name="last_updated" valueComputed="now()" />
+			<column name="last_updated_by" value="SYSTEM" />
+		</insert>
+		<sql>INSERT INTO moyadev.user_roles
+			(id,user_key,user_id,role_id,last_updated,last_updated_by)
+			VALUES(uuid_generate_v4(),(select user_key from moyadev.user where
+			fk_id IS
+			NULL),(select id from moyadev.user where fk_id IS
+			NULL),(select id
+			from moyadev.role where role_type =
+			'SUPERADMIN'),now(),'SYSTEM');
+		</sql>
+	</changeSet>
+	
+	<changeSet author="Himanshu" id="20160904-02">
+		<createTable tableName="approval_task" schemaName="moyadev">
+			<column name="id" type="CHAR(36)">
+				<constraints nullable="false" />
+			</column>
+			<column name="youth_enrollment_id" type="CHAR(36)" />
+			<column name="task_type" type="VARCHAR(100)" />
+			<column name="status" type="VARCHAR(100)" />
+			<column name="task_performed_by" type="VARCHAR(100)" />
+			<column name="comments" type="VARCHAR(100)" />
+			<column name="last_updated" type="timestamp" />
+			<column name="last_updated_by" type="VARCHAR(100)" />
+		</createTable>
+		<addPrimaryKey columnNames="id" tableName="approval_task"
+			schemaName="moyadev" />
+	</changeSet>
+	<changeSet author="Himanshu" id="20160904-03">
+		<createTable tableName="organization_approval_process"
+			schemaName="moyadev">
+			<column name="id" type="CHAR(36)">
+				<constraints nullable="false" />
+			</column>
+			<column name="parent_id" type="CHAR(36)" />
+			<column name="fk_id" type="CHAR(36)" />
+			<column name="fk_type" type="VARCHAR(100)" />
+			<column name="process" type="VARCHAR(100)" />
+			<column name="last_updated" type="timestamp" />
+			<column name="last_updated_by" type="VARCHAR(100)" />
+		</createTable>
+		<addPrimaryKey columnNames="id"
+			tableName="organization_approval_process" schemaName="moyadev" />
+	</changeSet>	
+	<changeSet author="Himanshu" id="20160910-02">
+		<createTable tableName="menu_per_role" schemaName="moyadev">
+			<column name="id" type="CHAR(36)">
+				<constraints nullable="false" />
+			</column>
+			<column name="role_id" type="CHAR(36)" />
+			<column name="menu_id" type="CHAR(36)" />
+			<column name="last_updated" type="timestamp" />
+			<column name="last_updated_by" type="VARCHAR(100)" />
+		</createTable>
+		<addPrimaryKey columnNames="id" tableName="menu_per_role"
+			schemaName="moyadev" />
+	</changeSet>
+	<changeSet author="Pushpendra" id="20160914-01">
+		<createTable tableName="role_level_priority" schemaName="moyadev">
+			<column name="id" type="CHAR(36)">
+				<constraints nullable="false" />
+			</column>
+			<column name="role_level" type="VARCHAR(100)" />
+			<column name="level_priority" type="INTEGER" />
+			<column name="last_updated" type="timestamp" />
+			<column name="last_updated_by" type="VARCHAR(100)" />
+		</createTable>
+		<addPrimaryKey columnNames="id" tableName="role_level_priority"
+			schemaName="moyadev" />
+	</changeSet>
+	
+	<changeSet author="Pushpendra" id="20160914-02">
+		<insert tableName="role_level_priority" schemaName="moyadev">
+			<column name="id" valueComputed="uuid_generate_v4()" />
+			<column name="role_level" value="ADMIN" />
+			<column name="level_priority" value='1' />		
+			<column name="last_updated" value="now()" />
+			<column name="last_updated_by" value="SYSTEM" />
+		</insert>
+		<insert tableName="role_level_priority" schemaName="moyadev">
+			<column name="id" valueComputed="uuid_generate_v4()" />
+		<column name="role_level" value="NATIONAL" />
+			<column name="level_priority" value='2' />		
+			<column name="last_updated" value="now()" />
+			<column name="last_updated_by" value="SYSTEM" />
+		</insert>
+		<insert tableName="role_level_priority" schemaName="moyadev">
+			<column name="id" valueComputed="uuid_generate_v4()" />
+			<column name="role_level" value="STATE" />
+			<column name="level_priority" value='3' />		
+			<column name="last_updated" value="now()" />
+			<column name="last_updated_by" value="SYSTEM" />
+		</insert>
+		<insert tableName="role_level_priority" schemaName="moyadev">
+			<column name="id" valueComputed="uuid_generate_v4()" />
+			<column name="role_level" value="DISTRICT" />
+			<column name="level_priority" value='4' />		
+			<column name="last_updated" value="now()" />
+			<column name="last_updated_by" value="SYSTEM" />
+		</insert>
+		<insert tableName="role_level_priority" schemaName="moyadev">
+			<column name="id" valueComputed="uuid_generate_v4()" />
+			<column name="role_level" value="UNIT" />
+			<column name="level_priority" value='5' />		
+			<column name="last_updated" value="now()" />
+			<column name="last_updated_by" value="SYSTEM" />
+		</insert>		
+	</changeSet>	
+	<changeSet author="Himanshu" id="20160914-03">
+		<createTable tableName="user_token" schemaName="moyadev">
+			<column name="id" type="CHAR(36)">
+				<constraints nullable="false" />
+			</column>
+			<column name="user_id" type="CHAR(36)" />
+			<column name="username" type="VARCHAR(100)" />
+			<column name="token_generation_time" type="VARCHAR(100)" />
+			<column name="last_updated" type="timestamp" />
+			<column name="last_updated_by" type="VARCHAR(100)" />
+		</createTable>
+		<addPrimaryKey columnNames="id" tableName="user_token" schemaName="moyadev" />
+	</changeSet>
+	<changeSet author="Himanshu" id="20160915-01">
+		<createTable tableName="organization_sms_notification_config"
+			schemaName="moyadev">
+			<column name="id" type="CHAR(36)">
+				<constraints nullable="false" />
+			</column>
+			<column name="fk_id" type="CHAR(36)" />
+			<column name="fk_type" type="VARCHAR(100)" />
+			<column name="notification_key" type="VARCHAR(100)" />
+			<column name="username" type="VARCHAR(100)" />
+			<column name="password" type="VARCHAR(100)" />
+			<column name="sender_id" type="VARCHAR(100)" />
+			<column name="validity_period" type="VARCHAR(100)" />
+			<column name="last_updated" type="timestamp" />
+			<column name="last_updated_by" type="VARCHAR(100)" />
+		</createTable>
+		<addPrimaryKey columnNames="id"
+			tableName="organization_sms_notification_config" schemaName="moyadev" />
+	</changeSet>
+	<changeSet author="Himanshu" id="20160915-02">
+		<createTable tableName="notification_email_details"
+			schemaName="moyadev">
+			<column name="id" type="CHAR(36)">
+				<constraints nullable="false" />
+			</column>
+			<column name="youth_enrollment_id" type="CHAR(36)" />
+			<column name="youth_email" type="VARCHAR(100)" />
+			<column name="email_subject" type="VARCHAR(100)" />
+			<column name="email_body" type="VARCHAR(400)" />
+			<column name="status" type="VARCHAR(100)" />
+			<column name="attempt" type="VARCHAR(100)" />
+			<column name="sent_date" type="VARCHAR(100)" />
+			<column name="last_updated" type="timestamp" />
+			<column name="last_updated_by" type="VARCHAR(100)" />
+		</createTable>
+		<addPrimaryKey columnNames="id"
+			tableName="notification_email_details" schemaName="moyadev" />
+	</changeSet>
+	<changeSet author="Himanshu" id="20160915-03">
+		<createTable tableName="notification_sms_details"
+			schemaName="moyadev">
+			<column name="id" type="CHAR(36)">
+				<constraints nullable="false" />
+			</column>
+			<column name="youth_enrollment_id" type="CHAR(36)" />
+			<column name="youth_mobile" type="VARCHAR(100)" />
+			<column name="sms_subject" type="VARCHAR(100)" />
+			<column name="sms_body" type="VARCHAR(400)" />
+			<column name="status" type="VARCHAR(100)" />
+			<column name="attempt" type="VARCHAR(100)" />
+			<column name="sent_date" type="VARCHAR(100)" />
+			<column name="last_updated" type="timestamp" />
+			<column name="last_updated_by" type="VARCHAR(100)" />
+		</createTable>
+		<addPrimaryKey columnNames="id"
+			tableName="notification_sms_details" schemaName="moyadev" />
+	</changeSet>
+	<changeSet author="Pushpendra" id="20160916-01">
+		<createTable tableName="geographic_data"
+			schemaName="moyadev">
+			<column name="id" type="CHAR(36)">
+				<constraints nullable="false" />
+			</column>			
+			<column name="geographic_code" type="VARCHAR(100)" />
+			<column name="geographic_name" type="VARCHAR(100)" />
+			<column name="parent_geographic_id" type="VARCHAR(100)" />
+			<column name="geographic_description" type="VARCHAR(100)" />
+			<column name="last_updated" type="timestamp" />
+			<column name="last_updated_by" type="VARCHAR(100)" />
+		</createTable>
+		<addPrimaryKey columnNames="id"
+			tableName="geographic_data" schemaName="moyadev" />
+	</changeSet>	
+			
+</databaseChangeLog>

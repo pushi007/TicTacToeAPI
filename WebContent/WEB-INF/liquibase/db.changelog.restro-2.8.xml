@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+<changeSet author="pallavi" id="20161019-01">
+		<insert tableName="organization" schemaName="moyadev">
+			<column name="id" valueComputed="uuid_generate_v4()" />
+			<column name="organization_type" value="Government" />
+			<column name="name" value="NSS" />
+			<column name="organization_alias" value="NSS" />
+			<column name="organization_registration_number" value="3" />
+			<column name="organization_email" value="" />
+			<column name="organization_url" value="" />
+			<column name="description" value="" />
+			<column name="support_email" value="" />
+			<column name="support_phone_area_code" value="0" />
+			<column name="support_phone_isd_code" value="0" />
+			<column name="support_phone" value="" />
+			<column name="support_phone_type" value="" />
+			<column name="organization_status" value="" />
+			<column name="address" value="" />
+			<column name="last_updated" value="now()" />
+			<column name="last_updated_by" value="SYSTEM" />
+
+		</insert>
+		<insert tableName="organization" schemaName="moyadev">
+			<column name="id" valueComputed="uuid_generate_v4()" />
+			<column name="organization_type" value="Government" />
+			<column name="name" value="IRCS" />
+			<column name="organization_alias" value="IRCS" />
+			<column name="organization_registration_number" value="1" />
+			<column name="organization_email" value="" />
+			<column name="organization_url" value="" />
+			<column name="description" value="" />
+			<column name="support_email" value="" />
+			<column name="support_phone_area_code" value="0" />
+			<column name="support_phone_isd_code" value="0" />
+			<column name="support_phone" value="" />
+			<column name="support_phone_type" value="" />
+			<column name="organization_status" value="" />
+			<column name="address" value="" />
+			<column name="last_updated" value="now()" />
+			<column name="last_updated_by" value="SYSTEM" />
+
+		</insert>
+		<insert tableName="organization" schemaName="moyadev">
+			<column name="id" valueComputed="uuid_generate_v4()" />
+			<column name="organization_type" value="Government" />
+			<column name="name" value="NCC" />
+			<column name="organization_alias" value="NCC" />
+			<column name="organization_registration_number" value="2" />
+			<column name="organization_email" value="" />
+			<column name="organization_url" value="" />
+			<column name="description" value="" />
+			<column name="support_email" value="" />
+			<column name="support_phone_area_code" value="0" />
+			<column name="support_phone_isd_code" value="0" />
+			<column name="support_phone" value="" />
+			<column name="support_phone_type" value="" />
+			<column name="organization_status" value="" />
+			<column name="address" value="" />
+			<column name="last_updated" value="now()" />
+			<column name="last_updated_by" value="SYSTEM" />
+
+		</insert>
+		<insert tableName="organization" schemaName="moyadev">
+			<column name="id" valueComputed="uuid_generate_v4()" />
+			<column name="organization_type" value="Government" />
+			<column name="name" value="Eco-Clubs" />
+			<column name="organization_alias" value="Eco-Clubs" />
+			<column name="organization_registration_number" value="7" />
+			<column name="organization_email" value="" />
+			<column name="organization_url" value="" />
+			<column name="description" value="" />
+			<column name="support_email" value="" />
+			<column name="support_phone_area_code" value="0" />
+			<column name="support_phone_isd_code" value="0" />
+			<column name="support_phone" value="" />
+			<column name="support_phone_type" value="" />
+			<column name="organization_status" value="" />
+			<column name="address" value="" />
+			<column name="last_updated" value="now()" />
+			<column name="last_updated_by" value="SYSTEM" />
+
+		</insert>
+				<insert tableName="organization" schemaName="moyadev">
+			<column name="id" valueComputed="uuid_generate_v4()" />
+			<column name="organization_type" value="Government" />
+			<column name="name" value="HSG" />
+			<column name="organization_alias" value="HSG" />
+			<column name="organization_registration_number" value="6" />
+			<column name="organization_email" value="" />
+			<column name="organization_url" value="" />
+			<column name="description" value="" />
+			<column name="support_email" value="" />
+			<column name="support_phone_area_code" value="0" />
+			<column name="support_phone_isd_code" value="0" />
+			<column name="support_phone" value="" />
+			<column name="support_phone_type" value="" />
+			<column name="organization_status" value="" />
+			<column name="address" value="" />
+			<column name="last_updated" value="now()" />
+			<column name="last_updated_by" value="SYSTEM" />
+
+		</insert>
+				<insert tableName="organization" schemaName="moyadev">
+			<column name="id" valueComputed="uuid_generate_v4()" />
+			<column name="organization_type" value="Government" />
+			<column name="name" value="BSG" />
+			<column name="organization_alias" value="BSG" />
+			<column name="organization_registration_number" value="5" />
+			<column name="organization_email" value="" />
+			<column name="organization_url" value="" />
+			<column name="description" value="" />
+			<column name="support_email" value="" />
+			<column name="support_phone_area_code" value="0" />
+			<column name="support_phone_isd_code" value="0" />
+			<column name="support_phone" value="" />
+			<column name="support_phone_type" value="" />
+			<column name="organization_status" value="" />
+			<column name="address" value="" />
+			<column name="last_updated" value="now()" />
+			<column name="last_updated_by" value="SYSTEM" />
+
+		</insert>
+				<insert tableName="organization" schemaName="moyadev">
+			<column name="id" valueComputed="uuid_generate_v4()" />
+			<column name="organization_type" value="Government" />
+			<column name="name" value="NYKS" />
+			<column name="organization_alias" value="NYKS" />
+			<column name="organization_registration_number" value="4" />
+			<column name="organization_email" value="" />
+			<column name="organization_url" value="" />
+			<column name="description" value="" />
+			<column name="support_email" value="" />
+			<column name="support_phone_area_code" value="0" />
+			<column name="support_phone_isd_code" value="0" />
+			<column name="support_phone" value="" />
+			<column name="support_phone_type" value="" />
+			<column name="organization_status" value="" />
+			<column name="address" value="" />
+			<column name="last_updated" value="now()" />
+			<column name="last_updated_by" value="SYSTEM" />
+		</insert> 
+		
+	</changeSet>
+
+	
+</databaseChangeLog>
