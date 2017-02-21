@@ -3,8 +3,7 @@
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>
-					/WEB-INF/config/security/application-security.xml,
-					/WEB-INF/config/database/db-config.xml,
+					/WEB-INF/config/security/application-security.xml,					
 					/WEB-INF/moya-servlet.xml
 		</param-value>
   </context-param>
