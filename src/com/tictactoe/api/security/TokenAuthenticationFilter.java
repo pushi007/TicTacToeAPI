@@ -29,14 +29,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import com.moya.api.entity.User;
-import com.moya.api.entity.UserToken;
 import com.tictactoe.api.constants.Constant;
 import com.tictactoe.api.exception.MoyaErrorResponse;
 import com.tictactoe.api.exception.MoyaResponseCreator;
 import com.tictactoe.api.service.GameService;
-import com.tictactoe.api.service.RoleService;
-import com.tictactoe.api.service.UserTokenService;
 import com.tictactoe.api.util.AesEncrytption;
 import com.tictactoe.api.util.MoyaFactory;
 import com.tictactoe.api.util.SHA1Encryption;
@@ -44,27 +40,6 @@ import com.tictactoe.api.util.SHA1Encryption;
 public class TokenAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
 	private final String LOGIN = "token";
-	private final String SIGNUP = "login";
-	private final String VISITORCOUNT = "VISITORCOUNT";
-	private final String CONTENT = "GETCONTENT";
-	private final String TASK_COUNT = "GETTASKCOUNT";
-	private final String EVENT = "GETEVENTDATA";
-	private final String EVENTLIST = "GETALLPUBLISHEVENT";
-	private final String ACHIEVEMENT = "GETACHIEVEMENTDATA";
-	private final String ACHIEVEMENTLIST = "GETALLPUBLISHACHIEVEMENTS";
-	private final String PHOTOLIST = "GETORGPHOTOGALLERY";
-	private final String VIDEOLIST = "GETORGVIDEOGALLERY";
-	private final String ITEMLIST = "GETFILES";
-	private final String FAQ = "GETALLACTIVEFAQ";
-	private final String ACTIVITY = "GETALLACTIVEACTIVITIES";
-	private final String HOMELINKS = "GETALLACTIVEHOMELINKS";
-	private final String SIGNOUT = "logout";
-	private final String UPLOAD_FILE = "ckeditorupload";
-	private final String MYGOV_API = "getmygovlist";
-	private final String GLOBALCONTENT = "GLOBALCONTENTSEARCH";
-
-	public String ipAddress;
-	public static String ckEditorNum;
 
 	@Autowired
 	AesEncrytption aesEncrytption;
@@ -88,55 +63,6 @@ public class TokenAuthenticationFilter extends AbstractAuthenticationProcessingF
 	@Override
 	protected boolean requiresAuthentication(HttpServletRequest request, HttpServletResponse response) {
 
-		try {
-			if (isTamperedURL(request, response, request.getRequestURL().toString(), request.getParameter("MYCAL"))) {
-
-				// LogOut the user by invalidating the session token.
-
-				String token = request.getHeader(Constant.TOKEN_AUTHENTICATION_HEADER.getValue());
-				if (token != null) {
-					String decryptedToken;
-					try {
-						token = new String(Base64.decodeBase64(token));
-						decryptedToken = new String(aesEncrytption.decrypt(token));
-						String tokenId[] = decryptedToken.split(":");
-						UserToken userToken = userTokenService.findById(tokenId[0]);
-						String username = userToken.getUsername();
-						userTokenService.updateToken(0, username);
-
-					} catch (Exception e) {
-						e.printStackTrace();
-
-						throw new AuthenticationServiceException(Constant.TOKEN_INVALID.getValue());
-					}
-				}
-
-				throw new AuthenticationServiceException(Constant.TOKEN_INVALID.getValue());
-			}
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-
-		if (request.getRequestURI().toLowerCase().contains(SIGNUP)
-				|| request.getRequestURI().toUpperCase().contains(VISITORCOUNT)
-				|| request.getRequestURI().toUpperCase().contains(CONTENT)
-				|| request.getRequestURI().toUpperCase().contains(EVENT)
-				|| request.getRequestURI().toUpperCase().contains(EVENTLIST)
-				|| request.getRequestURI().toUpperCase().contains(ACHIEVEMENT)
-				|| request.getRequestURI().toUpperCase().contains(ACHIEVEMENTLIST)
-				|| request.getRequestURI().toUpperCase().contains(PHOTOLIST)
-				|| request.getRequestURI().toUpperCase().contains(VIDEOLIST)
-				|| request.getRequestURI().toUpperCase().contains(ITEMLIST)
-				|| request.getRequestURI().toUpperCase().contains(FAQ)
-				|| request.getRequestURI().toUpperCase().contains(ACTIVITY)
-				|| request.getRequestURI().toUpperCase().contains(HOMELINKS)
-				|| request.getRequestURI().toLowerCase().contains(UPLOAD_FILE)
-				|| request.getRequestURI().toLowerCase().contains(MYGOV_API)
-				|| request.getRequestURI().toUpperCase().contains(GLOBALCONTENT)) {
-			return false;
-		}
 		return true;
 	}
 
@@ -171,15 +97,6 @@ public class TokenAuthenticationFilter extends AbstractAuthenticationProcessingF
 						throw new AuthenticationServiceException(Constant.TOKEN_INVALID.getValue());
 					}
 
-					// Added to refresh the token generation time.
-
-					if (!request.getRequestURI().toLowerCase().contains(SIGNOUT)) {
-						String tokenId[] = decryptedToken.split(":");
-						UserToken userToken = userTokenService.findById(tokenId[0]);
-						String username = userToken.getUsername();
-						userTokenService.updateToken(0, username);
-					}
-					// Added to refresh the token generation time.
 				} catch (Exception e) {
 					e.printStackTrace();
 
@@ -209,20 +126,17 @@ public class TokenAuthenticationFilter extends AbstractAuthenticationProcessingF
 		String username = userDetails[0];
 		String userpass = userDetails[1];
 		if (StringUtils.isNotBlank(username)) {
-			User user = userService.findByUsername(username);
-			if (user != null) {
-				if (authenticateUserCredentials(user, username, userpass, user.getStatus())) {
-					org.springframework.security.core.userdetails.User principal = new org.springframework.security.core.userdetails.User(
-							username, userpass, true, true, true, true, getGrantedAuthorities(user));
-					AbstractAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(principal, userpass,
-							principal.getAuthorities());
-					return authToken;
-				} else {
-					throw new AuthenticationServiceException(Constant.UNAUTHENTICATED.getValue());
-				}
+
+			if (authenticateUserCredentials(username, userpass)) {
+				org.springframework.security.core.userdetails.User principal = new org.springframework.security.core.userdetails.User(
+						username, userpass, true, true, true, true, getGrantedAuthorities(username));
+				AbstractAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(principal, userpass,
+						principal.getAuthorities());
+				return authToken;
 			} else {
-				throw new AuthenticationServiceException(Constant.INTERNAL_SERVER_ERROR.getValue());
+				throw new AuthenticationServiceException(Constant.UNAUTHENTICATED.getValue());
 			}
+
 		}
 		return null;
 	}
@@ -236,51 +150,39 @@ public class TokenAuthenticationFilter extends AbstractAuthenticationProcessingF
 	 */
 
 	private AbstractAuthenticationToken authUserByTokenTypeX(String token) throws JSONException {
-		String tokenId[] = token.split(":");
-		UserToken userToken = userTokenService.findById(tokenId[0]);
-		String username = userToken.getUsername();
-		String userpass = userToken.getUsername();
-		Long tokenGenerationTime = Long.parseLong(userToken.getTokenGenerationTime());
-		Long expiryTime = Long.parseLong(messages.getProperty(Constant.TOKEN_EXPIRY.getValue()));
+		String username = "praveenpal33@gmail.com";
+		String userpass = "admin#123";
+
 		if (StringUtils.isNotBlank(username)) {
-			User user = userService.findByUsername(username);
-			if (user != null) {
-				if (authenticateUserCredentials(user, username, userpass, user.getStatus())) {
-					boolean credentialStatus = true;
-					if (System.currentTimeMillis() - tokenGenerationTime <= expiryTime) {
-						org.springframework.security.core.userdetails.User principal = new org.springframework.security.core.userdetails.User(
-								username, userpass, true, true, true, credentialStatus, getGrantedAuthorities(user));
-						AbstractAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(principal,
-								userpass, principal.getAuthorities());
-						return authToken;
-					} else {
-						throw new AuthenticationServiceException(Constant.UNAUTHORIZED.getValue());
-					}
-				} else {
-					throw new AuthenticationServiceException(Constant.UNAUTHENTICATED.getValue());
-				}
+
+			if (authenticateUserCredentials(username, userpass)) {
+				boolean credentialStatus = true;
+
+				org.springframework.security.core.userdetails.User principal = new org.springframework.security.core.userdetails.User(
+						username, userpass, true, true, true, credentialStatus, getGrantedAuthorities(username));
+				AbstractAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(principal, userpass,
+						principal.getAuthorities());
+				return authToken;
+
 			} else {
-				throw new AuthenticationServiceException(Constant.INTERNAL_SERVER_ERROR.getValue());
+				throw new AuthenticationServiceException(Constant.UNAUTHENTICATED.getValue());
 			}
+
 		}
 		return null;
 	}
 
-	private List<GrantedAuthority> getGrantedAuthorities(User user) {
+	private List<GrantedAuthority> getGrantedAuthorities(String username) {
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 
-		// for (UserRoles userRoles : user.getUserRoles()) {
-		// authorities.add(new SimpleGrantedAuthority("ROLE_" +
-		// roleService.findById(userRoles.getRoleId()).getRoleType()));
-		// }
-		authorities.add(new SimpleGrantedAuthority("ROLE_" + roleService.findById(user.getRoleId()).getName()));
-		logger.info("User :" + user.getId() + " Authorities :" + authorities);
+		authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+
 		return authorities;
 	}
 
-	private boolean authenticateUserCredentials(User user, String username, String userpass, String userStatus) {
+	private boolean authenticateUserCredentials(String username, String userpass) {
 		try {
-			if (user.getUserKey().equals(username) && userStatus.equalsIgnoreCase(Constant.ACTIVE.getValue())) {
+			if ("praveenpal33@gmail.com".equals(username) && "admin#123".equals(userpass)) {
 				return true;
 			}
 		} catch (Exception e) {
@@ -292,30 +194,8 @@ public class TokenAuthenticationFilter extends AbstractAuthenticationProcessingF
 	boolean i = true;
 
 	@Override
-	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException,
-			ServletException {/*
-								 * HttpServletRequest request =
-								 * (HttpServletRequest) req; HttpServletResponse
-								 * response = (HttpServletResponse) res; if
-								 * (request.getRequestURI().toLowerCase().
-								 * contains(LOGIN)) { super.doFilter(req, res,
-								 * chain); } else { response.setHeader(
-								 * "Access-Control-Allow-Origin",
-								 * messages.getProperty(Constant.ALLOW_ORIGINS.
-								 * getValue())); response.setHeader(
-								 * "Access-Control-Allow-Credentials", "true");
-								 * response.setHeader(
-								 * "Access-Control-Allow-Methods",
-								 * "POST, GET, OPTIONS, DELETE");
-								 * response.setHeader("Access-Control-Max-Age",
-								 * "-1"); response.setHeader(
-								 * "Access-Control-Allow-Headers",
-								 * "Content-Type, Accept, X-Auth-Token, Authorization, X-Requested-With"
-								 * ); if (request.getMethod().equalsIgnoreCase(
-								 * "OPTIONS")) { chain.doFilter(req, res); }
-								 * else { super.doFilter(req, res, chain); } }
-								 */
-		/* CORS Handling */
+	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
+			throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) res;
 
@@ -359,34 +239,7 @@ public class TokenAuthenticationFilter extends AbstractAuthenticationProcessingF
 		List<String> statusAndCode = moyaResponseCreator.getResponseCode(authenticationException.getMessage());
 		response.setContentType("application/json");
 		response.setStatus(Integer.parseInt(statusAndCode.get(0).replace("SC", "")));
-		response.getOutputStream()
-				.println(moyaResponseCreator.getMoyaJsonResponse(new MoyaErrorResponse(statusAndCode.get(0),
-						statusAndCode.get(1), statusAndCode.get(2), statusAndCode.get(3))));
-	}
-
-	// to validate if URL is tempered.
-
-	private Boolean isTamperedURL(HttpServletRequest request, HttpServletResponse response, String requestURL,
-			String hashInURL) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-
-		if (requestURL.endsWith(messages.getProperty(Constant.APP_NAME.getValue()) + "/")) {
-			return false;
-		}
-
-		if (!StringUtils.isEmpty(hashInURL)) {
-			String hashInAPI = SHA1Encryption.SHA1(requestURL);
-
-			if (!hashInURL.equals(hashInAPI)) {
-				System.out.println("hashInURL " + hashInURL + "," + " hashInAPI " + hashInAPI);
-				return true;
-			} else {
-				return false;
-			}
-		} else {
-
-			return true;
-		}
-
+		response.getOutputStream().println(moyaResponseCreator.getMoyaJsonResponse(new MoyaErrorResponse()));
 	}
 
 }

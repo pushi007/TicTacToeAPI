@@ -22,19 +22,17 @@ import com.tictactoe.api.exception.MoyaResponseCreator;
 public final class MoyaAuthenticationEntryPoint implements AuthenticationEntryPoint {
 	@Autowired
 	MoyaResponseCreator moyaResponseCreator;
-	
+
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authenticationException) throws IOException {
-		//response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+		// response.sendError(HttpServletResponse.SC_UNAUTHORIZED,
+		// "Unauthorized");
 
 		List<String> statusAndCode = moyaResponseCreator.getResponseCode(authenticationException.getMessage());
 		response.setContentType("application/json");
 		response.setStatus(Integer.parseInt(statusAndCode.get(0).replace("SC", "")));
-		response.getOutputStream()
-				.println(moyaResponseCreator
-						.getMoyaJsonResponse(new MoyaErrorResponse(statusAndCode.get(0), statusAndCode.get(1),
-								statusAndCode.get(2), statusAndCode.get(3))));
-	
+		response.getOutputStream().println(moyaResponseCreator.getMoyaJsonResponse(new MoyaErrorResponse()));
+
 	}
 }

@@ -8,13 +8,13 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 public class MoyaErrorResponse {
-	
+
 	private String statusCode;
 	private String status;
 	private String statusMessage;
 	private String additionalStatusMessage;
-	
-	public MoyaErrorResponse(){
-		
+
+	public MoyaErrorResponse() {
+
 	}
 }

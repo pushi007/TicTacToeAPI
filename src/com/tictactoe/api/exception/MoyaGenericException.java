@@ -17,15 +17,17 @@ public class MoyaGenericException extends Exception implements Serializable {
 	@Autowired
 	MoyaResponseCreator moyaResponseCreator;
 
-	public void throwMoyaGenericException(String exceptionCode, String message){
-		List<String> statusAndCode = moyaResponseCreator.getResponseCode(exceptionCode);
-		throw new MoyaException(moyaResponseCreator
-				.getMoyaJsonResponse(new MoyaErrorResponse(statusAndCode.get(0), statusAndCode.get(1),
-						statusAndCode.get(2), message)), moyaResponseCreator);
+	public void setMoyaResponseCreator(MoyaResponseCreator moyaResponseCreator) {
+		this.moyaResponseCreator = moyaResponseCreator;
 	}
-	
-	private MoyaGenericException(){
-		
+
+	public void throwMoyaGenericException(String exceptionCode, String message) {
+		List<String> statusAndCode = moyaResponseCreator.getResponseCode(exceptionCode);
+		throw new MoyaException(moyaResponseCreator.getMoyaJsonResponse(new MoyaErrorResponse()), moyaResponseCreator);
+	}
+
+	private MoyaGenericException() {
+
 	}
 
 }
