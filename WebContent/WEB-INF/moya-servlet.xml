@@ -25,9 +25,9 @@
 	<!-- Scans the classpath for annotated components that will be auto-registered 
 		as Spring beans. For example @Controller and @Service. Make sure to set the 
 		correct base-package -->
-	<context:component-scan base-package="com.moya.api" />
+	<context:component-scan base-package="com.tictactoe.api" />
 
-	<bean id="moyaEndpointImpl" class="com.moya.tictactoe.endpoint.impl.MoyaEndpointImpl" />
+	<bean id="moyaEndpointImpl" class="com.tictactoe.tictactoe.endpoint.impl.MoyaEndpointImpl" />
 
 
 	<jaxrs:server id="moyaService" address="/moyaService">
@@ -53,7 +53,7 @@
 		<property name="location" value="classpath:moya.properties" />
 	</bean>
 
-	<bean id="aesEncrytption" class="com.moya.api.util.AesEncrytption">
+	<bean id="aesEncrytption" class="com.tictactoe.api.util.AesEncrytption">
 		<constructor-arg type="java.lang.String">
 			<value>aXRzZGlnaXRhbDpp</value>
 		</constructor-arg>
@@ -61,11 +61,11 @@
 
 	<!-- Exception Handling -->
 
-	<bean id="moyaErrorResponse" class="com.moya.api.exception.MoyaErrorResponse" />
+	<bean id="moyaErrorResponse" class="com.tictactoe.api.exception.MoyaErrorResponse" />
 
-	<bean id="moyaResponseCreator" class="com.moya.api.exception.MoyaResponseCreator" />
+	<bean id="moyaResponseCreator" class="com.tictactoe.api.exception.MoyaResponseCreator" />
 
-	<bean id="moyaGenericException" class="com.moya.api.exception.MoyaGenericException"
+	<bean id="moyaGenericException" class="com.tictactoe.api.exception.MoyaGenericException"
 		depends-on="moyaResponseCreator" scope="prototype" />
 
 

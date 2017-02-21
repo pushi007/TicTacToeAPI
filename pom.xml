@@ -1,8 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.moya.api</groupId>
-	<artifactId>moya-api</artifactId>
+	<groupId>com.tictactoe.api</groupId>
+	<artifactId>tictactoe-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
@@ -29,9 +29,9 @@
 
 	<developers>
 		<developer>
-			<id>S0000742</id>
-			<name>Himanshu Tiwari</name>
-			<email>himanshu.tiwari@aurionpro.com</email>
+			<id>pp48178</id>
+			<name>Pushpendra Pal</name>
+			<email>praveenpal33@gmail.com</email>
 			<url>http://www.aurionpro.com</url>
 			<roles>
 				<role>Principal Engineer</role>
