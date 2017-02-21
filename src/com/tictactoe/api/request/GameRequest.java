@@ -16,4 +16,12 @@ public class GameRequest implements Serializable {
 
 	private int game[][];
 
+	public int[][] getGame() {
+		return game;
+	}
+
+	public void setGame(int game[][]) {
+		this.game = game;
+	}
+
 }

@@ -560,19 +560,11 @@
 						<artifactId>liquibase-maven-plugin</artifactId>
 						<version>3.5.1</version>
 						<configuration>
-							<changeLogFile>${project.basedir}/WebContent/WEB-INF/liquibase/${changelog}.xml</changeLogFile>
-							<propertyFile>${project.basedir}/WebContent/WEB-INF/secured_resources/properties/liquibase.properties</propertyFile>
+
 						</configuration>
 						<executions>
-						<!-- 
-							<execution>
-								<phase>process-resources</phase>
-								<goals>
-									<goal>dropAll</goal>
-									<goal>update</goal>
-								</goals>
-							</execution>
-							 -->
+							<!-- <execution> <phase>process-resources</phase> <goals> <goal>dropAll</goal> 
+								<goal>update</goal> </goals> </execution> -->
 						</executions>
 					</plugin>
 				</plugins>

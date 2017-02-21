@@ -14,11 +14,8 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.web.client.RestTemplate;
 
 import com.tictactoe.api.constants.Constant;
 import com.tictactoe.api.endpoint.Connectors;
@@ -26,6 +23,7 @@ import com.tictactoe.api.endpoint.MoyaEndpoint;
 import com.tictactoe.api.exception.MoyaErrorResponse;
 import com.tictactoe.api.exception.MoyaGenericException;
 import com.tictactoe.api.exception.MoyaResponseCreator;
+import com.tictactoe.api.model.Game;
 import com.tictactoe.api.request.GameRequest;
 import com.tictactoe.api.service.GameService;
 import com.tictactoe.api.util.AesEncrytption;
@@ -43,7 +41,7 @@ public class MoyaEndpointImpl extends Connectors implements MoyaEndpoint, Applic
 	Properties messages;
 
 	@Autowired
-	GameService userService;
+	GameService gameService;
 
 	@Autowired
 	MoyaFactory moyaFactory;
@@ -138,16 +136,11 @@ public class MoyaEndpointImpl extends Connectors implements MoyaEndpoint, Applic
 
 		Object res = null;
 		try {
-			RestTemplate restTemplate = new RestTemplate();
-			restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-			restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-
-			// String url = myGovAPIRequest.getUrl() +
-			// messages.getProperty(Constant.API_KEY.getValue());
-
-			// res =
-			// restTemplate.getForObject(UriComponentsBuilder.fromHttpUrl(url).toUriString(),
-			// String.class);
+			Game game = new Game();
+			game.setBoard(gameRequest.getGame());
+			game.setActivePlayer(2);
+			gameService.getNextChoice(game);
+			gameService.calculateNewState(game, game.getNextChoice());
 
 		} catch (Exception e) {
 			e.printStackTrace();
